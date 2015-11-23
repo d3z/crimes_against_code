@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crimes (against code)</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/crimes.css">
+</head>
+<body ng-app="crimesApp">
+
+    <div class="container" ng-controller="CrimesController as controller">
+        <label for="searchDate">Search for:</label>
+        <input type="month" id="searchDate" min="2011-09" max="2015-09" ng-model="controller.searchDate"/>
+        <button class="btn btn-primary" ng-click="controller.getCrimes()">Fetch data</button>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="crime in controller.crimes">
+                    <td>{{controller.categoryOf(crime)}}</td>
+                    <td>
+                        <crime-location-link label="crime.location.street.name"
+                                             lat="crime.location.latitude"
+                                             lng="crime.location.longitude">
+                        </crime-location-link>
+                    </td>
+                    <td>{{controller.outcomeOf(crime)}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="javascript/crimes_app.js"></script>
+
+</body>
+</html>

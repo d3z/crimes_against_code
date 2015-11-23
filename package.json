@@ -9,6 +9,7 @@
   "author": "Gareth Fleming <gareth.fleming@instil.co>",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.4.8"
+    "angular": "^1.4.8",
+    "bootstrap": "^3.3.5"
   }
 }
