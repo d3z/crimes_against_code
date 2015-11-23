@@ -1,0 +1,14 @@
+{
+  "name": "crime_against_code",
+  "version": "1.0.0",
+  "description": "Reports the street-level crime figures provided by the UK police.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gareth Fleming <gareth.fleming@instil.co>",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.8"
+  }
+}
