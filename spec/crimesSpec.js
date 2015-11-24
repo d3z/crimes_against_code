@@ -4,7 +4,7 @@
 
     describe("Crimes controller", function() {
 
-        var crimesController, $httpBackend, $rootScope;
+        var crimesController, $httpBackend;
         var crimesUrl = "http://crime-data.uk?date=";
         var searchDate = "2015-11";
 
@@ -30,9 +30,8 @@
             $provide.value("defaultDate", new Date(searchDate));
         }));
 
-        beforeEach(inject(function($controller, _$httpBackend_, _$rootScope_, CrimesService){
+        beforeEach(inject(function($controller, _$httpBackend_, CrimesService){
             $httpBackend = _$httpBackend_;
-            $rootScope = _$rootScope_;
             crimesController = $controller("CrimesController", {CrimesService:CrimesService});
         }));
 
@@ -77,10 +76,6 @@
         it("should return N/A for the outcome of a crime when no outcome is available", function() {
             var crime = {outcome_status: null};
             expect(crimesController.outcomeOf(crime)).toEqual("N/A");
-        });
-
-        afterEach(function() {
-            $rootScope.$apply();
         });
 
     });
