@@ -2,11 +2,18 @@
 
     'use strict';
 
+    var crimesUrl = "http://crime-data.uk?date=";
+    var searchDate = "2015-11";
+
+    beforeEach(module("crimesApp", function($provide){
+        $provide.value("crimesUrl", crimesUrl);
+        $provide.value("defaultDate", new Date(searchDate));
+    }));
+
     describe("Crimes controller", function() {
 
         var crimesController, $httpBackend;
-        var crimesUrl = "http://crime-data.uk?date=";
-        var searchDate = "2015-11";
+        var searchUrl = crimesUrl + searchDate;
 
         var crimes = [
             {
@@ -25,18 +32,13 @@
             }
         ];
 
-        beforeEach(module("crimesApp", function($provide){
-            $provide.value("crimesUrl", crimesUrl);
-            $provide.value("defaultDate", new Date(searchDate));
-        }));
-
         beforeEach(inject(function($controller, _$httpBackend_, CrimesService){
             $httpBackend = _$httpBackend_;
             crimesController = $controller("CrimesController", {CrimesService:CrimesService});
         }));
 
         it("should fetch its data from a remote service", function() {
-            $httpBackend.expectGET(crimesUrl + searchDate).respond(function() {
+            $httpBackend.expectGET(searchUrl).respond(function() {
                 return crimes;
             });
             crimesController.getCrimes();
@@ -44,7 +46,7 @@
         });
 
         it("should not fetch remote data when the same search is being done", function() {
-            $httpBackend.expectGET(crimesUrl + searchDate).respond(function() {
+            $httpBackend.expectGET(searchUrl).respond(function() {
                 return [200, crimes];
             });
             crimesController.getCrimes();
@@ -53,7 +55,7 @@
         });
 
         it("should use the data returned from the remote service", function(done) {
-            $httpBackend.whenGET(crimesUrl + searchDate).respond(function() {
+            $httpBackend.whenGET(searchUrl).respond(function() {
                 return [200, crimes];
             });
             crimesController.getCrimes().then(function(){
@@ -84,8 +86,6 @@
 
         var $compile;
         var $rootScope;
-
-        beforeEach(module("crimesApp"));
 
         beforeEach(inject(function(_$compile_, _$rootScope_) {
             $compile = _$compile_;
