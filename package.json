@@ -2,9 +2,9 @@
   "name": "crime_against_code",
   "version": "1.0.0",
   "description": "Reports the street-level crime figures provided by the UK police.",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma run karma.conf.js --singleRun=true"
   },
   "author": "Gareth Fleming <gareth.fleming@instil.co>",
   "license": "ISC",

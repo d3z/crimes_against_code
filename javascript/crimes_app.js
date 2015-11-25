@@ -16,6 +16,8 @@
                 var deferred = $q.defer();
                 $http.get(crimesUrl + date).then(function(response) {
                     deferred.resolve(response.data);
+                }, function() {
+                    deferred.resolve([]);
                 });
                 return deferred.promise;
             }

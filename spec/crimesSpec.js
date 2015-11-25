@@ -39,7 +39,7 @@
 
         it("should fetch its data from a remote service", function() {
             $httpBackend.expectGET(searchUrl).respond(function() {
-                return crimes;
+                return [200, crimes];
             });
             crimesController.getCrimes();
             $httpBackend.flush();
@@ -54,13 +54,22 @@
             $httpBackend.flush();
         });
 
-        it("should use the data returned from the remote service", function(done) {
+        it("should use the data returned from the remote service", function() {
             $httpBackend.whenGET(searchUrl).respond(function() {
                 return [200, crimes];
             });
             crimesController.getCrimes().then(function(){
                 expect(crimesController.crimes).toEqual(crimes);
-                done();
+            });
+            $httpBackend.flush();
+        });
+
+        it("should return an empty list on error", function() {
+            $httpBackend.whenGET(searchUrl).respond(function() {
+                return [500, "error"];
+            });
+            crimesController.getCrimes().then(function(){
+                expect(crimesController.crimes).toEqual([]);
             });
             $httpBackend.flush();
         });
@@ -78,6 +87,11 @@
         it("should return N/A for the outcome of a crime when no outcome is available", function() {
             var crime = {outcome_status: null};
             expect(crimesController.outcomeOf(crime)).toEqual("N/A");
+        });
+
+        afterEach(function() {
+            $httpBackend.verifyNoOutstandingRequest();
+            $httpBackend.verifyNoOutstandingExpectation();
         });
 
     });
